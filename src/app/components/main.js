@@ -2,10 +2,14 @@
 
 import { IoMdSearch } from "react-icons/io";
 import { MdOutlineVideogameAsset } from "react-icons/md";
+import { CiLocationArrow1 } from "react-icons/ci";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"
 
 export default function Main() {
+
+    const router = useRouter()
 
     const [search, setSearch] = useState("");
     const [heading, setHeading] = useState(null);
@@ -91,7 +95,7 @@ export default function Main() {
                 <ul className="w-full mt-4 space-y-4 flex flex-wrap items-start justify-start gap-8">
                     {games.length > 0 ? (
                         games.map((game, index) => (
-                            <li key={index} className="p-4 bg-[#232323] rounded-lg shadow-md mb-4 flex flex-col items-start justify-between w-full md:w-1/2 lg:w-1/3 xl:w-3/13 min-h-87">
+                            <li key={index} className="p-4 bg-[#232323] rounded-lg shadow-md mb-4 flex flex-col items-start justify-between w-full md:w-1/2 lg:w-1/3 xl:w-3/13 min-h-96">
                                 <div className="flex flex-col items-start justify-start">
                                     <img src={game.background_image} alt={game.name} className="w-full h-48 object-cover rounded-lg mt-2" />
                                     <h1 className="font-semibold mt-2 text-lg text-left">{game.name}</h1>
@@ -99,6 +103,7 @@ export default function Main() {
                                 <div className="flex flex-col items-start justify-start">
                                     <p className="text-gray-400">{game.released !== null ? formatDate(game.released) : 'Release not found'}</p>
                                     <p>{game.rating ? <span className="text-yellow-500">{"★".repeat(Math.round(game.rating))}</span> : "Rating not found"} </p>
+                                    <p className="text-gray-400 mt-2 flex gap-2 items-center hover:underline cursor-pointer transition-all duration-200" onClick={() => router.push(`/game/${game.id}`)}><CiLocationArrow1 className="text-sm" />Details</p>
                                 </div>
                             </li>
                         ))
